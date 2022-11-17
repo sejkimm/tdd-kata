@@ -1,0 +1,39 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.11.0
+    steps:
+      - checkout
+      - run:
+          command: |
+            cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
+            pyenv install 3.9.13
+            pyenv local 3.9.13 3.11.0
+            poetry install
+          name: install python envs and deps
+      - run:
+          command: |
+            poetry run tox
+          name: run tests
+  lint:
+    docker:
+      - image: cimg/python:3.11.0
+    steps:
+      - checkout
+      - run:
+          command: |
+            poetry install
+      - run:
+          command: |
+            poetry run black ./
+          name: run formatter
+      - run:
+          command: |
+            poetry run pylint tdd_kata
+          name: run lint
+workflows:
+  main:
+    jobs:
+      - test
+      # - lint

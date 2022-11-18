@@ -1,4 +1,9 @@
-# /tests/test_string_calculator.py
+"""
+Test tdd_kata
+
+Usage:
+    pytest -v
+"""
 
 import pytest
 

@@ -36,4 +36,4 @@ workflows:
   main:
     jobs:
       - test
-      # - lint
+      - lint

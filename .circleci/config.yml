@@ -12,7 +12,7 @@ jobs:
           key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
       - run:
           command: |
-            if [ ! -d "~/.pyenv/versions/3.9.13" ] 
+            if [ -d "~/.pyenv/versions/3.9.13" ] 
             then
                 echo "pyenv path 3.9.13 exists"
                 ls ~/.pyenv/versions/3.9.13

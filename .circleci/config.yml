@@ -7,7 +7,7 @@ jobs:
       - checkout
       - restore_cache:
           name: restore pyenv cache
-          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum pyproject.toml }}
+          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
       - run:
           command: |
             cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
@@ -18,10 +18,10 @@ jobs:
           name: save pyenv cache
           paths:
             - "~/.pyenv/versions/"
-          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum pyproject.toml }}
+          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
       - restore_cache:
           name: restore python deps cache
-          key: poetry-dep-v1-{{ .Branch }}-{{ checksum poetry.lock }}
+          key: poetry-dep-v1-{{ .Branch }}-{{ checksum "poetry.lock" }}
       - run:
           command: |
             poetry config --local virtualenvs.in-project true
@@ -31,7 +31,7 @@ jobs:
           name: save python deps cache
           paths:
             - ".venv"
-          key: poetry-dep-v1-{{ .Branch }}-{{ checksum poetry.lock }}
+          key: poetry-dep-v1-{{ .Branch }}-{{ checksum "poetry.lock" }}
       - run:
           command: |
             poetry run tox

@@ -6,25 +6,25 @@ jobs:
     docker:
       - image: cimg/python:3.11.0
     steps:
-      - checkout
-      - restore_cache:
-          name: restore pyenv cache
-          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
+      # - checkout
+      # - restore_cache:
+      #     name: restore pyenv cache
+      #     key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
       - run:
           command: |
-            if [ -d "~/.pyenv/versions/3.9.13" ] 
-            then
-                echo "pyenv path 3.9.13 exists"
-                ls ~/.pyenv/versions/3.9.13
-                # cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
-                # pyenv install 3.9.13
-            fi
+            # if [ -d "~/.pyenv/versions/3.9.13" ] 
+            # then
+                # echo "pyenv path 3.9.13 exists"
+                # ls ~/.pyenv/versions/3.9.13
+            cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
+            pyenv install 3.9.13
+            # fi
           name: install pyenv
-      - save_cache:
-          name: save pyenv cache
-          paths:
-            - "~/.pyenv/versions/"
-          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
+      # - save_cache:
+      #     name: save pyenv cache
+      #     paths:
+      #       - "~/.pyenv/versions/"
+      #     key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
       - run:
           name: set pyenv local interpreter
           command: |

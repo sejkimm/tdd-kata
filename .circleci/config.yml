@@ -38,8 +38,7 @@ jobs:
           command: |
             poetry run tox
           name: run tests
-      - codecov/upload:
-          file: {{ htmlcov/index.html }}
+      - codecov/upload: #
   lint:
     docker:
       - image: cimg/python:3.11.0

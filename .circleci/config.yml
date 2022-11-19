@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 jobs:
   test:
     docker:
@@ -36,6 +38,8 @@ jobs:
           command: |
             poetry run tox
           name: run tests
+      - codecov/upload:
+          file: {{ htmlcov/index.html }}
   lint:
     docker:
       - image: cimg/python:3.11.0

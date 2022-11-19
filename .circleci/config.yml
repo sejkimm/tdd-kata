@@ -5,13 +5,33 @@ jobs:
       - image: cimg/python:3.11.0
     steps:
       - checkout
+      - restore_cache:
+          name: restore pyenv cache
+          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum pyproject.toml }}
       - run:
           command: |
             cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
             pyenv install 3.9.13
             pyenv local 3.9.13 3.11.0
+          name: install pyenv
+      - save_cache:
+          name: save pyenv cache
+          paths:
+            - "~/.pyenv/versions/"
+          key: pyenv-dep-v1-{{ .Branch }}-{{ checksum pyproject.toml }}
+      - restore_cache:
+          name: restore python deps cache
+          key: poetry-dep-v1-{{ .Branch }}-{{ checksum poetry.lock }}
+      - run:
+          command: |
+            poetry config --local virtualenvs.in-project true
             poetry install
-          name: install python envs and deps
+          name: install python deps
+      - save_cache:
+          name: save python deps cache
+          paths:
+            - ".venv"
+          key: poetry-dep-v1-{{ .Branch }}-{{ checksum poetry.lock }}
       - run:
           command: |
             poetry run tox

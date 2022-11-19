@@ -12,9 +12,9 @@ jobs:
           key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
       - run:
           command: |
+            cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
             if [ ! -d "~/.pyenv/versions/3.9.13" ] 
             then
-                cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
                 pyenv install 3.9.13
             fi
           name: install pyenv

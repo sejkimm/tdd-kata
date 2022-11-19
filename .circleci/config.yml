@@ -12,15 +12,21 @@ jobs:
           key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
       - run:
           command: |
-            cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
-            pyenv install 3.9.13
-            pyenv local 3.9.13 3.11.0
+            if [ ! -d "~/.pyenv/versions/3.9.13" ] 
+            then
+                cd /home/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
+                pyenv install 3.9.13
+            fi
           name: install pyenv
       - save_cache:
           name: save pyenv cache
           paths:
             - "~/.pyenv/versions/"
           key: pyenv-dep-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}
+      - run:
+          name: set pyenv local interpreter
+          command: |
+            pyenv local 3.9.13 3.11.0
       - restore_cache:
           name: restore python deps cache
           key: poetry-dep-v1-{{ .Branch }}-{{ checksum "poetry.lock" }}

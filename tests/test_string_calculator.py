@@ -84,3 +84,12 @@ def test_add_two_number_string_ignore_over_1000_expect_sum(string_calculator):
     result = string_calculator.Add(input_string)
 
     assert result == 2
+
+
+def test_add_three_number_string_with_three_length_delimiter_expect_sum(
+    string_calculator,
+):
+    input_string = "//[***]\n1***2***3"
+    result = string_calculator.Add(input_string)
+
+    assert result == 6

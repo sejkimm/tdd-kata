@@ -1,5 +1,7 @@
 # pylint: disable=missing-module-docstring, invalid-name
 
+import re
+
 
 class StringCalculator:
     """
@@ -23,8 +25,8 @@ class StringCalculator:
         delimiter = ","
 
         if numbers.startswith("//"):
-            delimiter = self.get_delimiter(numbers)
-            numbers = numbers[4:]
+            delimiter, number_start = self.get_delimiter(numbers)
+            numbers = numbers[number_start:]
 
         numbers = numbers.replace("\n", delimiter)
 
@@ -40,7 +42,7 @@ class StringCalculator:
         result = sum(list_numbers)
         return result
 
-    def get_delimiter(self, numbers: str) -> str:
+    def get_delimiter(self, numbers: str) -> tuple:
         """
         Get String of numbers and return delimiter of them
 
@@ -48,11 +50,23 @@ class StringCalculator:
             numbers: str - String of numbers
 
         :return
-            delimiter: str - Delimiter of numbers(param)
+            (delimiter, number_start): tuple
+
+            - delimiter: str - Delimiter of numbers(param)
+            - number_start: int - First index where actual number string starts
         """
 
         delimiter = numbers[2]
-        return delimiter
+        number_start = 4
+
+        long_delimiter_pattern = re.compile(r"\/\/\[.+\]")
+        matched_delimiter_pattern = re.match(long_delimiter_pattern, numbers)
+
+        if matched_delimiter_pattern:
+            delimiter = numbers[3 : matched_delimiter_pattern.end() - 1]
+            number_start = matched_delimiter_pattern.end() + 1
+
+        return delimiter, number_start
 
     def check_negative(self, list_numbers: list) -> None:
         """

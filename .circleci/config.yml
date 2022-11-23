@@ -46,7 +46,8 @@ jobs:
           command: |
             poetry run tox
           name: run tests
-      - codecov/upload
+      - codecov/upload:
+          file: coverage.xml
   lint:
     docker:
       - image: cimg/python:3.11.0

@@ -22,16 +22,19 @@ class StringCalculator:
             result: int - Sum of numbers
         """
 
-        delimiter = ","
+        default_delimiter = ","
+        delimiters = [","]
 
         if numbers.startswith("//"):
-            delimiter, number_start = self.get_delimiter(numbers)
+            delimiters, number_start = self.get_delimiter(numbers)
             numbers = numbers[number_start:]
 
-        numbers = numbers.replace("\n", delimiter)
+        numbers = numbers.replace("\n", default_delimiter)
+        for delimiter in delimiters:
+            numbers = numbers.replace(delimiter, default_delimiter)
 
         try:
-            list_numbers = list(map(int, numbers.split(delimiter)))
+            list_numbers = list(map(int, numbers.split(default_delimiter)))
         except ValueError:
             result = 0
             return result
@@ -50,23 +53,26 @@ class StringCalculator:
             numbers: str - String of numbers
 
         :return
-            (delimiter, number_start): tuple
+            (delimiters, number_start): tuple
 
-            - delimiter: str - Delimiter of numbers(param)
+            - delimiters: list - List of delimiters(param)
             - number_start: int - First index where actual number string starts
         """
 
-        delimiter = numbers[2]
-        number_start = 4
+        long_delimiter_pattern = re.compile(r"(\[.*?\])")
+        matched_delimiter_iter = long_delimiter_pattern.finditer(numbers)
 
-        long_delimiter_pattern = re.compile(r"\/\/\[.+\]")
-        matched_delimiter_pattern = re.match(long_delimiter_pattern, numbers)
+        delimiters = []
 
-        if matched_delimiter_pattern:
-            delimiter = numbers[3 : matched_delimiter_pattern.end() - 1]
-            number_start = matched_delimiter_pattern.end() + 1
+        if long_delimiter_pattern.search(numbers) is not None:
+            for match in matched_delimiter_iter:
+                delimiters.append(numbers[match.start() + 1 : match.end() - 1])
+                number_start = match.end() + 1
+        else:
+            delimiters.append(numbers[2])
+            number_start = 4
 
-        return delimiter, number_start
+        return delimiters, number_start
 
     def check_negative(self, list_numbers: list) -> None:
         """

@@ -93,3 +93,19 @@ def test_add_three_number_string_with_three_length_delimiter_expect_sum(
     result = string_calculator.Add(input_string)
 
     assert result == 6
+
+
+def test_add_three_number_string_with_multiple_delimiter_expect_sum(string_calculator):
+    input_string = "//[*][%]\n1*2%3"
+    result = string_calculator.Add(input_string)
+
+    assert result == 6
+
+
+def test_add_three_number_string_with_multiple_length_delimiter_expect_sum(
+    string_calculator,
+):
+    input_string = "//[***][%%%]\n1***2%%%3"
+    result = string_calculator.Add(input_string)
+
+    assert result == 6

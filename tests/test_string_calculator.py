@@ -13,8 +13,8 @@ from tdd_kata.string_calculator import StringCalculator, NegativeNumberError
 
 @pytest.fixture(scope="module")
 def string_calculator():
-    string_calculator = StringCalculator()
-    yield string_calculator
+    str_calculator = StringCalculator()
+    yield str_calculator
 
 
 def test_add_empty_string_expect_0(string_calculator):

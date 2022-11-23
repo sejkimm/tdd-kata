@@ -23,13 +23,13 @@ class StringCalculator:
         """
 
         default_delimiter = ","
-        delimiters = [","]
 
         if numbers.startswith("//"):
             delimiters, number_start = self.get_delimiter(numbers)
             numbers = numbers[number_start:]
+        else:
+            delimiters = ["\n", ","]
 
-        numbers = numbers.replace("\n", default_delimiter)
         for delimiter in delimiters:
             numbers = numbers.replace(delimiter, default_delimiter)
 

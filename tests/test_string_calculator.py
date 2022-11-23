@@ -110,6 +110,7 @@ def test_add_three_number_string_with_multiple_length_delimiter_expect_sum(
 
     assert result == 6
 
+
 def test_add_three_number_string_with_multiple_length_delimiter_expect_sum(
     string_calculator,
 ):

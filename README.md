@@ -1,5 +1,8 @@
 # tdd-kata
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sejkimm/tdd-kata/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sejkimm/tdd-kata/tree/main)
+[![codecov](https://codecov.io/gh/sejkimm/tdd-kata/branch/main/graph/badge.svg?token=V4DP6N1BXI)](https://codecov.io/gh/sejkimm/tdd-kata)
+
 ## Introduction
 
 Practicing TDD on Python with CI/CD Pipeline

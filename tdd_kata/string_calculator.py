@@ -30,8 +30,22 @@ class StringCalculator:
 
         try:
             list_numbers = list(map(int, numbers.split(delimiter)))
+            negatives = [number for number in list_numbers if number < 0]
+
+            if negatives:
+                raise NegativeNumberError(str(negatives))
+
             result = sum(list_numbers)
         except ValueError:
             result = 0
 
         return result
+
+
+class NegativeNumberError(Exception):
+    """
+    Exception when given string includes negative number
+    """
+
+    def __init__(self, msg: str) -> None:
+        super().__init__("negatives not allowed - " + msg)

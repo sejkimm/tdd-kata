@@ -5,9 +5,10 @@ Usage:
     pytest -v
 """
 
+import re
 import pytest
 
-from tdd_kata.string_calculator import StringCalculator
+from tdd_kata.string_calculator import StringCalculator, NegativeNumberError
 
 
 @pytest.fixture(scope="module")
@@ -65,3 +66,14 @@ def test_add_three_number_string_with_full_comma_delimiter_expect_sum(
     result = string_calculator.Add(input_string)
 
     assert result == 6
+
+
+def test_add_negative_number_string_expect_exception_with_negatives(string_calculator):
+    input_string = "//.\n1.-2.3"
+
+    with pytest.raises(NegativeNumberError) as error_msg:
+        string_calculator.Add(input_string)
+
+    error_msg_str = str(error_msg.value)
+
+    assert re.match(r"negatives not allowed", error_msg_str)

@@ -77,3 +77,10 @@ def test_add_negative_number_string_expect_exception_with_negatives(string_calcu
     error_msg_str = str(error_msg.value)
 
     assert re.match(r"negatives not allowed", error_msg_str)
+
+
+def test_add_two_number_string_ignore_over_1000_expect_sum(string_calculator):
+    input_string = "//,\n2,1001"
+    result = string_calculator.Add(input_string)
+
+    assert result == 2

@@ -35,6 +35,7 @@ class StringCalculator:
             return result
 
         self.check_negative(list_numbers)
+        list_numbers = self.ignore_over(list_numbers, threshold=1000)
 
         result = sum(list_numbers)
         return result
@@ -68,6 +69,22 @@ class StringCalculator:
 
         if negatives:
             raise NegativeNumberError(str(negatives))
+
+    def ignore_over(self, list_numbers: list, threshold: int) -> list:
+        """
+        Get List of numbers and threshold, return list of numbers under or same threshold value
+
+        :param
+            list_numbers: list - List of Integer numbers
+
+        :return
+            filtered_list_numbers: list - List of filtered Integer numbers (<= threshold)
+        """
+
+        filtered_list_numbers = [
+            number for number in list_numbers if number <= threshold
+        ]
+        return filtered_list_numbers
 
 
 class NegativeNumberError(Exception):
